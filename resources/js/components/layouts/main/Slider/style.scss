@@ -1,0 +1,35 @@
+.SecondExample
+{
+    width: 100%;
+
+    .Project
+    {
+        position: relative;
+        height: 300px;
+        overflow: hidden;
+        padding: 120px;
+
+
+        *
+        {
+            color: black;
+            text-align:center;
+
+        }
+
+        .CheckButton
+        {
+            margin-top: 40px;
+            color: black;
+
+            font-size: 12px;
+            border: 3px solid green;
+            text-transform: capitalize;
+
+            // transition: 200ms;
+        }
+    }
+}
+.welcome{
+    textAlign:center;
+}

@@ -1,0 +1,25 @@
+{
+    "name": "brainstorm/takaful",
+    "description": "Takaful specta extension",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Brainstorm\\Takaful\\": "src/Brainstorm/Takaful/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ishaq Ibrahim",
+            "email": "ibagwa9i@gmail.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {
+        "phpmailer/phpmailer":"~5.2",
+        "monolog/monolog":"^1.19",
+        "twig/twig":"~1.0",        
+        "doctrine/orm": "^2.6.2",
+          "guzzlehttp/guzzle": "^7.0"
+    }
+}
