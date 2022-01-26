@@ -20,7 +20,7 @@ import {Typography,
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { MainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
@@ -147,8 +147,8 @@ export default function Dashboard({ user }) {
           <ProfileHeader
             className={classes.header}
             displayName={user.username}
-            bio="Professional photographer"
-            coverUrl="https://source.unsplash.com/collection/841904"
+            bio={user.reg_no}
+            coverUrl={user.profile_pic}
             avatarUrl={logo}
             stats={{
               teachers:312,

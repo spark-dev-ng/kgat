@@ -27,6 +27,7 @@ import {
 	NativeSelect,
 	Grid
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 class LoginForm extends React.Component {
 	constructor(props) {
@@ -176,10 +177,12 @@ class LoginForm extends React.Component {
 			<Paper className={className}>
 				<CardContent>
 					<div className={classes.logoContainer}>
+					<Link to="/">
 						<img
 							className={classes.logo}
 							src={logo}
 						/>
+						</Link>
 					</div>
 					<Typography variant="h5" align="center">{user} Registration</Typography>
 					<Typography variant="subtitle2" color="secondary" align="center">{this.state.loginError}</Typography>

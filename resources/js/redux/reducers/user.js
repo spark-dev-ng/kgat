@@ -11,6 +11,11 @@ export function user(state = init, action) {
         ...state,
         loading: true
       };
+      case userConstants.LOGIN_SUCCESS:
+        return {
+          ...state,
+          user: action.user
+        };
     case userConstants.GETAUTH_SUCCESS:
       return {
         ...state,

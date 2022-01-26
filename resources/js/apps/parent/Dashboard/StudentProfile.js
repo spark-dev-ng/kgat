@@ -106,7 +106,7 @@ export default function StudentProfile({child, no_reports, sessions, session}) {
   }
   const renderStudent = ()=>{
     if(child){
-      const img = child.profile_pix
+      const img = child.profile_pic
       return(
         <CardContent>
           <ProfileHeader

@@ -16,16 +16,16 @@ const styles = theme => ({
 const ParentProfileStats = ({ classes, className, data }) => (
   <div className={cx(classes.root, className)}>
     <div>
-      <Typography variant="h6">{data.item[0]}</Typography>
-      <Typography variant="caption" color="textSecondary">{data.val[0]}</Typography>
+      <Typography variant="h6"></Typography>
+      <Typography variant="caption" color="textSecondary">Ahmda</Typography>
     </div>
     <div>
-      <Typography variant="h6">{data.item[1]}</Typography>
-      <Typography variant="caption" color="textSecondary">{data.val[1]}</Typography>
+      <Typography variant="h6"></Typography>
+      <Typography variant="caption" color="textSecondary">Auwal</Typography>
     </div>
     <div>
-      <Typography variant="h6">{data.item[2]}</Typography>
-      <Typography variant="caption" color="textSecondary">{data.val[2]}</Typography>
+      <Typography variant="h6">Musa</Typography>
+      <Typography variant="caption" color="textSecondary">Sani</Typography>
     </div>
   </div>
 );

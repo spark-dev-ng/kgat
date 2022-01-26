@@ -6,18 +6,21 @@ import { history } from './helpers'
 // import Themes from "./admin-hook/themes";
 // import { LayoutProvider } from "./admin-hook/context/LayoutContext";
 // import { UserProvider } from "./admin-hook/context/UserContext";
-import GuardianProfile from './apps/parent/dashboard/index';
+import Dashboard from './apps/parent/Dashboard/index';
 import ChildProfile from './apps/parent/dashboard/Student';
 import TerminalReport from './apps/parent/dashboard/TerminalReportConnected';
 import SessionReport from './apps/parent/dashboard/Session';
 import MainSession from './apps/parent/dashboard/MainSession';
+import Teachers from './apps/parent/dashboard/Admin/Teachers';
  import {
   PageIndex,
   LoginPage,  
-  UserProfilePage ,
+  UserProfilePage,
   PageSignUp,
   RegSuccess
   } from './routes/main'
+  import {userActions} from './redux/actions'
+import { useDispatch, useSelector } from 'react-redux';
 // import App from './admin-hook/components/App'
 // const AdminApp =()=>{
 //   return <LayoutProvider>
@@ -33,14 +36,22 @@ import MainSession from './apps/parent/dashboard/MainSession';
 
 
 const Application  = () => {
-  // const user  = useSelector(state =>state.auth.user);
- const user = localStorage.getItem('user')
+  
+  const {user, loggedIn}  = useSelector(state =>state.auth);
+  
   const token = localStorage.getItem('token');
-console.error({user})
-const GuardianRoute = ({ component: Component, user,...rest }) => (
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    if(!user || !user.id ){
+     dispatch( userActions.getAuth(token))
+    }  
+  }, [0])
+
+const GuardianRoute = ({ component: Component,...rest }) => (
     <Route {...rest} render={props => (
-        (user && user.userable_type.length>0)||token
-            ? <Component {...props} />
+        (user && user.id>0)
+            ? <Component {...props} user={user}  />
             : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
     )} />
 )
@@ -53,7 +64,7 @@ const GuardianRoute = ({ component: Component, user,...rest }) => (
 // )
 const AuthRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
-    (user && user.id>0)||token
+    (user && user.id>0 )
         ? <Redirect to={{ pathname: '/dashboard', state: { from: props.location } }} />
         : <Component {...props} />
   )} />
@@ -64,13 +75,14 @@ const AuthRoute = ({ component: Component, ...rest }) => (
           <AuthRoute path="/login/:type?" component={LoginPage} />
           <AuthRoute path="/register/:type?" component={PageSignUp} />
           <Route path="/profile" component={UserProfilePage} />
-          <GuardianRoute path="/dashboard/" component={GuardianProfile} />
+          <GuardianRoute path="/dashboard" component={Dashboard} />
           <GuardianRoute path="/g-child/:id" component={ChildProfile} />
           <GuardianRoute path="/g-child-report/:id/:session/:term" component={TerminalReport} />
           <GuardianRoute path="/g-child-ses-reports/:id/:session" component={SessionReport} />
           <GuardianRoute path="/g-child-view-reports/:id/:session" component={MainSession} />
           {/* <AdminRoute path="/auth" exact component={AdminApp} /> */}
-          <Route path="/register-success/:id?" exact component={RegSuccess} />
+          <Route path="/register-success/:type?" exact component={RegSuccess} />
+          {/* <Route path="/teachers" exact component={Teachers} /> */}
           {/* <Route path="/app" exact component={App2} /> */} 
       </Router>
   )

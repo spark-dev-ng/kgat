@@ -11,7 +11,7 @@ class School extends Model {
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name','code'];
 
     public function classes()
     {

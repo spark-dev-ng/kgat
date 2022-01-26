@@ -24,11 +24,11 @@ class  Student extends React.Component {
   render(){
     const { child  } = this.props
     let parent = child  && child.child  ? child .child   : ''
-    let profile_pix ='default.jpg'
+    let profile_pic ='default.jpg'
     if(child && child.userable)
-        profile_pix = child && child.userable ? child.userable.profile_pix : ''
+        profile_pic = child && child.userable ? child.userable.profile_pic : ''
     return (
-      <StudentProfile child={child} img={`/student_photo/${profile_pix}`} />
+      <StudentProfile child={child} img={`/student_photo/${profile_pic}`} />
     );
   }
 }

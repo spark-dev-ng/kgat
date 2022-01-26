@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { userActions } from '../../../../redux/actions'
 import { getSchools, getClasses } from '../../../../helpers'
 
-import {URLS} from '../../../../redux/constants'
+import { URLS } from '../../../../redux/constants'
 
 import {
 	Button,
@@ -82,32 +82,32 @@ class RegisterForm extends React.Component {
 	}
 
 	renderTextField({ label, input, type, meta: { touched, invalid, error }, ...custom }) {
-		return type==='date'?(
-			<FormControl style={{marginTop:5, borderBottom:error ?'1 solid red !important':'1 solid black !important'}}>
+		return type === 'date' ? (
+			<FormControl style={{ marginTop: 5, borderBottom: error ? '1 solid red !important' : '1 solid black !important' }}>
 				<FormHelperText>{label}</FormHelperText>
-			<input type='date'
-			style={{ width: '100%', border:'none', borderBottom:'1 solid black'}}
-			{...input}
-			{...custom}
-		/>
-			{touched && error  && error && (<span style={{color:'red'}}>{error}</span>)}
-	</FormControl>
-		)
-		:(
-			<FormControl>
-				<TextField
-					label={label}
-					placeholder={label}
-					margin='dense'
-					type={type}
-					style={{ width: '100%' }}
-					error={touched && invalid}
-					helperText={touched && error}
+				<input type='date'
+					style={{ width: '100%', border: 'none', borderBottom: '1 solid black' }}
 					{...input}
 					{...custom}
 				/>
+				{touched && error && error && (<span style={{ color: 'red' }}>{error}</span>)}
 			</FormControl>
 		)
+			: (
+				<FormControl>
+					<TextField
+						label={label}
+						placeholder={label}
+						margin='dense'
+						type={type}
+						style={{ width: '100%' }}
+						error={touched && invalid}
+						helperText={touched && error}
+						{...input}
+						{...custom}
+					/>
+				</FormControl>
+			)
 	}
 
 	renderCheckbox({ label, input, meta: { touched, invalid, error }, ...custom }) {
@@ -131,19 +131,19 @@ class RegisterForm extends React.Component {
 
 	handleRegSubmit(props) {
 		this.setState({ submitted: true })
-    console.error(props)
+		console.error(props)
 		const { password } = props
-    props.type='Student';
-    props.profile_pix=sessionStorage.getItem('profile_pix');
-		if (password && props.profile_pix) {
+		props.type = 'Student';
+		props.profile_pic = sessionStorage.getItem('profile_pic');
+		if (password && props.profile_pic) {
 			this.props.dispatch(userActions.register(props));
 		}
 	}
 
-  	renderSelect({ label, input, options, meta: { touched, invalid, error }, ...custom }) {
+	renderSelect({ label, input, options, meta: { touched, invalid, error }, ...custom }) {
 		return (
 			<FormControl>
-					<FormHelperText>{label}</FormHelperText>
+				<FormHelperText>{label}</FormHelperText>
 				<NativeSelect
 					margin='dense'
 					style={{ width: '100%' }}
@@ -155,8 +155,8 @@ class RegisterForm extends React.Component {
 					<option value="">
 						{label}
 					</option>
-					{options.map((item,i)=>(<option value={item} key={i}>{item}</option>))}
-				
+					{options.map((item, i) => (<option value={item} key={i}>{item}</option>))}
+
 				</NativeSelect>
 				{custom.helper({ touched, error })}
 			</FormControl>)
@@ -175,13 +175,17 @@ class RegisterForm extends React.Component {
 			{ name: 'first_name', label: 'First name', type: 'text' },
 			{ name: 'last_name', label: 'Last name', type: 'text' },
 			{ name: 'other_name', label: 'Other name', type: 'text' },
-			{ name: 'gender', label: 'Gender', type: 'select', options:['Male','Female','Other'] },
+			{ name: 'gender', label: 'Gender', type: 'select', options: ['Male', 'Female', 'Other'] },
 			{ name: 'dob', label: 'Date of birth', type: 'date' },
 			{ name: 'pob', label: 'Place of birth', type: 'text' },
-			{ name: 'school', label: 'Select school', type: 'select',
-				options:getSchools().map(s=>s.name) },
-			{ name: 'class', label: 'Select class', type: 'select', 
-				options:getClasses().map(c=>c.name) },
+			{
+				name: 'school', label: 'Select school', type: 'select',
+				options: getSchools().map(s => s.name)
+			},
+			{
+				name: 'class', label: 'Select class', type: 'select',
+				options: getClasses().map(c => c.name)
+			},
 			{ name: 'parent_name', label: 'Guardian name', type: 'text' },
 			{ name: 'address', label: 'Address', type: 'text' },
 			{ name: 'lga', label: 'Local govt. of origin', type: 'text' },
@@ -198,7 +202,7 @@ class RegisterForm extends React.Component {
 		]
 		const { handleSubmit, pristine, reset, className, submitting, classes, loggingIn, user } = this.props
 		return (
-			<Paper className={className} style={{paddingLeft:60}}>
+			<Paper className={className} style={{ paddingLeft: 60 }}>
 				<CardContent>
 					<div className={classes.logoContainer}>
 						<img
@@ -209,13 +213,16 @@ class RegisterForm extends React.Component {
 					<Typography variant="h5" align="center">{user} Registration</Typography>
 					<Typography variant="subtitle2" color="secondary" align="center">{this.state.RegisterError}</Typography>
 					<form className={classes.form} onSubmit={handleSubmit(this.handleRegSubmit.bind(this))}>
+						<Grid item xs={12} sm={12} lg={12} md={12} style={{ width: '100%' }}>
+							<DropFile style={{ width: '100%' }} />
+						</Grid>
 						<Grid container spacing={0}>
-							{fields.map((field,i) =>
+							{fields.map((field, i) =>
 								field.type === 'select' ? (
 									<Grid key={i} item xs={12} sm={6}>
 										<Field name={field.name} component={this.renderSelect} label={field.label}
 											helper={this.renderFormHelper}
-                      options={field.options}
+											options={field.options}
 										/>
 									</Grid>) : field.type === 'password' ?
 									(
@@ -230,14 +237,12 @@ class RegisterForm extends React.Component {
 									) :
 										(
 											<Grid key={i} item xs={12} sm={6}>
-												<Field name={field.name} component={this.renderTextField}  type={field.type}  label={field.label} />
+												<Field name={field.name} component={this.renderTextField} type={field.type} label={field.label} />
 											</Grid>
 										)
 							)}
 							<div>
-							<Grid item xs={12} sm={12} lg={12} md={12} style={{width:'100%'}}>
-								<DropFile  style={{width:'100%'}}/>
-							</Grid>
+
 								<Button
 									variant="contained"
 									type="submit"

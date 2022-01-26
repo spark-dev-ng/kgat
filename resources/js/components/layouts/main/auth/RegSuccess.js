@@ -24,9 +24,20 @@ import {
 class RegSucess extends React.Component{
     constructor(props) {
         super(props)
-        console.error({ID:props.match.params.id})
-         const {id} = props.match.params
-         this.props.dispatch(userActions.getStudent(id));
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        console.error({TYPE:props.match.params.type,id})
+        const {type} = props.match.params
+         switch (type) {
+             case 'Student':
+                this.props.dispatch(userActions.getStudent(id));
+                 break;
+            case 'Teacher':
+                 this.props.dispatch(userActions.getTeacher(id));
+             default:
+                 break;
+         }
+         
 
          this.state = {
              submitted: false
@@ -37,7 +48,7 @@ class RegSucess extends React.Component{
 
     render(){
         const {classes, className} = this.props;
-        // const {id,pob,first_name,last_name,other_name,gender,state,lga,phone,phone2,religion,occupation,email,reg_no, class_id,school_id, parent_id,session_id, profile_pix, created_at} = this.props?.student;
+        // const {id,pob,first_name,last_name,other_name,gender,state,lga,phone,phone2,religion,occupation,email,reg_no, class_id,school_id, parent_id,session_id, profile_pic, created_at} = this.props?.student;
          const {student} = this.props
          return (
         <Paper className={className}>
@@ -59,7 +70,7 @@ class RegSucess extends React.Component{
                         <span>{student?.first_name}</span>
                     </Grid>
                 </Grid> */}
-                <img style={{with:100, height:120}} src={student?.profile_pix} alt='Picture' />
+                <img style={{with:100, height:120}} src={student?.profile_pic} alt='Picture' />
                 <table>
                     <thead></thead>
                     <tr><td colSpan='6'><Typography variant="h5" align="center">Basic information:</Typography></td></tr>

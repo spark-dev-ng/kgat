@@ -1,7 +1,7 @@
 <?php namespace App;
 
 use App\Model;
-
+use Spatie\Permission\Traits\HasRoles;
 class Teacher extends Model {
 
     /**
@@ -16,7 +16,7 @@ class Teacher extends Model {
      *
      * @var array
      */
-    protected $fillable = ['name', 'gender','class_id', 'school_id','dob', 'profile_pix', 'teacher_reg', 'address', 'phone','created_at', 'updated_at'];
+    protected $fillable = ['name', 'gender','class', 'classes', 'subjects', 'school_id','dob', 'profile_pic', 'reg_no', 'address', 'phone','status','created_at', 'updated_at'];
 
     /*
      * Some Validation rules for this model's new instance.
@@ -24,10 +24,12 @@ class Teacher extends Model {
     public static $validationRules = array(
         'name' => 'required|string',
         'gender' => 'required',
-        'class_id' => 'required|integer',
+        'class' => 'required|string',
+        'classes' => 'string',
+        'subjects' => 'string',
         'address' => 'required|string',
         'dob' => 'required|date',
-        'phone' => 'required|digits_between:6,20|unique:teachers',
+        'phone' => 'required|digits_between:10,20|unique:teachers',
         'image' => 'required|image',
     );
 
@@ -37,7 +39,7 @@ class Teacher extends Model {
     public static $updateRules = array(
         'address' => 'string',
         'phone' => 'digits_between:6,20',
-        'profile_pix' => 'image',
+        'profile_pic' => 'image',
     );
 
     public function class()

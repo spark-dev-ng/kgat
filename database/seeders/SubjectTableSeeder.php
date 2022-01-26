@@ -14,7 +14,7 @@ class SubjectTableSeeder extends Seeder {
         foreach($groups as $key => $group) {
             Subject::create(array(
                 'name' => $group,
-                'group_id' => rand(1, 3)
+                'school_id' => rand(1, 3)
             ));
         }
     }

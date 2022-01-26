@@ -87,7 +87,7 @@ export default function PrintReportSheet({student, term, session}) {
 
   const renderHeader = ()=>{
     if(student){
-      const img = student.profile_pix
+      const img = student.profile_pic
       return(
         <CardContent>
           <ReportSheetHeader

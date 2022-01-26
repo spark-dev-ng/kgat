@@ -21,7 +21,6 @@ class StudentTableSeeder extends Seeder {
                 'parent_id'=> $faker->numberBetween(1,10 ),
                 'reg_no' => 'ST'.$range,
                 'class_id' => $faker->numberBetween(1, 11),
-                'class_type_id' => $faker->numberBetween(1, 5),
                 'dob' => $faker->date(),
                 'phone' => $faker->phoneNumber,
             ));

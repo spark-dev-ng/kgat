@@ -8,6 +8,7 @@ class AdminTableSeeder extends Seeder {
 
     public function run()
     {
+        User::truncate();
         Admin::truncate();
 
         $admin = Admin::create(array(

@@ -60,10 +60,10 @@ class TeacherAccountController extends Controller {
 
 
         $teacher = Teacher::create(array_merge($request->except(['image-file','password']),
-            ['teacher_reg'=>$reg_no]));
+            ['reg_no'=>$reg_no]));
 
         User::create([
-            'username'=> $teacher->teacher_reg,
+            'username'=> $teacher->reg_no,
             'userable_id' => $teacher->id,
             'userable_type' => 'App\\Teacher',
             'password' => $request->password

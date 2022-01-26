@@ -3,7 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClassGroupTable extends Migration {
+class CreateSchoolsTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,13 +13,10 @@ class CreateClassGroupTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('classgroups', 
-		function(Blueprint $table)
-		{
+		Schema::create('schools', function (Blueprint $table) {
 			$table->id();
-			$table->string('group_id',2)->nullable();
-			$table->string('name', 20);
-			$table->string('code', 20)->nullable();
+			$table->string('name');
+			$table->string('code');
 			$table->timestamps();
 		});
 	}
@@ -30,7 +28,6 @@ class CreateClassGroupTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('classgroups');
+		Schema::dropIfExists('schools');
 	}
-
 }

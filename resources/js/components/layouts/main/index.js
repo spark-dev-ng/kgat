@@ -14,7 +14,7 @@ import ParentRegister from './auth/ParentRegister'
 import StudentRegister from './auth/StudentRegister';
 import FormSignUp from './auth/FormSignUp'
 import FormLogin from './auth/FormLogin'
-
+import TeacherRegister from './auth/TeacherRegister'
 export {
     ActivityListItem,
     AppBar,
@@ -31,5 +31,6 @@ export {
     ParentRegister,
     FormLogin,
     StudentRegister,
+    TeacherRegister,
     Footer
 }

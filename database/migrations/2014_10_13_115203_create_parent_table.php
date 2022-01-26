@@ -22,7 +22,7 @@ class CreateParentTable extends Migration
 			$table->string('religion', 25)->nullable();
 			$table->string('occupation', 200)->nullable();
 			$table->string('address', 500)->nullable();
-			$table->string('profile_pix')->nullable();
+			$table->string('profile_pic')->nullable();
 			$table->timestamps();
 		});
 	}

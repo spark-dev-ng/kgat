@@ -6,13 +6,7 @@ export function parent(state = {}, action) {
       return {
         loading: true
       };
-    case parentConstants.GETAUTH_SUCCESS:
-      return { parent: action.parent };
-    case parentConstants.GETAUTH_FAILURE:
-      return { 
-        error: action.error
-      };
-    case parentConstants.GETCHILD_SUCCESS:
+      case parentConstants.GETCHILD_SUCCESS:
         return { ...state, ...action.child };
     case parentConstants.GETCHILD_FAILURE:
       return { 

@@ -1,10 +1,17 @@
-export const authHeader= ()=> {
-    // return authorization header with jwt token
-    let user = JSON.parse(localStorage.getItem('user')||null);
-    // console.error({authHeaderwe:user});
-    if (user ) {
-        return { 'Authorization': 'Bearer ' + user.token };
-    } else {
-        return {};
-    }
+export const authHeader = () => {
+	// return authorization header with jwt token
+	let token = JSON.parse(localStorage.getItem('token'));
+	// console.error({authHeaderwe:user});
+	// if (token) {
+		return {
+			'Authorization': 'Bearer ' + token,
+			'Content-Type': 'application/json',
+			'X-Requested-With': 'XMLHttpRequest'
+		};
+	// } else {
+	// 	return {
+	// 		'Content-Type': 'application/json',
+	// 		'X-Requested-With': 'XMLHttpRequest'
+	// 	};
+	// }
 }

@@ -9,25 +9,11 @@ import {Typography,
     Grid,
     Paper
 } from '@material-ui/core';
-import AppBarMain from './AppBarMain'
 import Students from'./Students'
-
+import Teacher from'./Teacher/Profile'
 import ProfileHeader from '../../../components/layouts/main/ProfileHeader'
-function Copyright() {                                                   
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="/">
-        School
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
- 
-const drawerWidth = 240;
-
+import { useDispatch, useSelector } from 'react-redux';
+import { userActions } from '../../../redux/actions';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -53,22 +39,25 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Profile({ user, img }) {
+export default function Profile() {
+  const {user} = useSelector(state=>state.auth)
   const classes = useStyles();
+  const dispatch = useDispatch();
   let myChildren = []
+  const img = user.profile_pic
+  React.useEffect(()=>{
+    if(!user)
+      dispatch(userActions.getAuth());
+  },[0])
+
   if(user && user.userable){
     myChildren = user.userable.students
   }
- const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
-    <div className={classes.root}>
-      
-    <AppBarMain />
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
+    <div>
         <CardContent>
           <ProfileHeader
-            className={classes.header}
+            className={classes.container}
             displayName={user.name}
             bio={user.username}
             coverUrl="https://source.unsplash.com/collection/841904"
@@ -79,7 +68,6 @@ export default function Profile({ user, img }) {
         </CardContent>
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
@@ -88,8 +76,6 @@ export default function Profile({ user, img }) {
             </Grid>
           </Grid>
         </Container>
-        <Copyright />
-      </main>
     </div>
   );
 }

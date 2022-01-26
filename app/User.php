@@ -22,7 +22,7 @@ class User extends Model implements AuthenticatableContract {
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['username', 'password', 'userable_id', 'userable_type', 'remember_token'];
+	protected $fillable = ['username', 'password', 'userable_id', 'userable_type', 'remember_token','email','phone'];
 
 	public static $CreateRules =[
         'username' => 'required|string|min:3|max:15|unique:users',

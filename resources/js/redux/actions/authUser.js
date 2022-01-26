@@ -10,6 +10,9 @@ export const userActions = {
 	getAuth,
 	getAll,
 	getStudent,
+	getStudents:(f)=>f,
+	getTeacher,
+	getTeachers,
 	registerParent,
 };
 
@@ -21,7 +24,7 @@ function login(username, password) {
 			.then(
 				user => {
 					dispatch(success(user));
-					history.push('/dashboard');
+					// history.push('/dashboard');
 					// location = '/dashboard';
 				},
 			)
@@ -94,11 +97,49 @@ function getStudent(id){
 				dispatch(alertActions.error(error));
 			})
 	};
-
 	// function request(user) { return { type: 'GUEST-STUDENT', user } }
 	function success(user) { return  { type: 'GUEST-STUDENT', payload:user.student }  } 
 	function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+}
 
+function getTeacher(id){
+	return dispatch => {
+		userService.getTeacher(id)
+			.then(
+				user => {
+					dispatch(success(user));
+					// location = '/dashboard';
+				},
+			)
+			.catch(error => {
+				dispatch(failure(error));
+				console.error({ error })
+				dispatch(alertActions.error(error));
+			})
+	};
+	// function request(user) { return { type: 'GUEST-STUDENT', user } }
+	function success({teacher}) { return  { type: 'TEACHER', teacher }  } 
+	function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+}
+
+function getTeachers(){
+	return dispatch => {
+		userService.getTeachers()
+			.then(
+				users => {
+					dispatch(success(users));
+					// location = '/dashboard';
+				},
+			)
+			.catch(error => {
+				dispatch(failure(error));
+				console.error({ error })
+				dispatch(alertActions.error(error));
+			})
+	};
+	// function request(user) { return { type: 'GUEST-STUDENT', user } }
+	function success(users) { return  { type: 'ALL-TEACHERS', teachers:users.teachers }  } 
+	function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
 }
 
 function logout() {
@@ -109,14 +150,12 @@ function logout() {
 function getAll() {
 	return dispatch => {
 		dispatch(request());
-
 		userService.getAll()
 			.then(
 				users => dispatch(success(users)),
 				error => dispatch(failure(error))
 			);
 	};
-
 	function request() { return { type: userConstants.GETALL_REQUEST } }
 	function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
 	function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
@@ -125,14 +164,12 @@ function getAll() {
 function getAuth() {
 	return dispatch => {
 		dispatch(request());
-
 		userService.getAuth()
 			.then(
 				user => dispatch(success(user)),
 				error => dispatch(failure(error))
 			);
 	};
-
 	function request() { return { type: userConstants.GETAUTH_REQUEST } }
 	function success(user) { return { type: userConstants.GETAUTH_SUCCESS, user } }
 	function failure(error) { return { type: userConstants.GETAUTH_FAILURE, error } }

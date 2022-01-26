@@ -14,7 +14,7 @@ class  Dashboard extends React.Component {
     }
   }
   componentDidMount() {
-    this.props.dispatch(userActions.getAuth())
+    // this.props.dispatch(userActions.getAuth())
   }
 
   handleDrawerClose(){
@@ -31,11 +31,11 @@ class  Dashboard extends React.Component {
 
 
 const mapStateToProps = (state)=> {
-    const { user } = state
+    const { user } = state.auth
     console.log({fly_state:state})
 
     return  {
-      user: user.item
+      user
     } 
 }
 

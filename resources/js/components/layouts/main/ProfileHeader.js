@@ -34,7 +34,7 @@ const styles = theme => ({
   }
 });
 
-const ProfileHeader = ({ classes, displayName, bio, avatarUrl, coverUrl, data, className }) => {
+const ProfileHeader = ({ classes, displayName, bio, avatarUrl, coverUrl, data, className,children }) => {
   const headerStyle = coverUrl
     ? { backgroundImage: `url('${coverUrl}')` }
     : null;
@@ -49,10 +49,11 @@ const ProfileHeader = ({ classes, displayName, bio, avatarUrl, coverUrl, data, c
           {bio}
         </Typography>
       </div>
-      <ParentProfileStats
+      {/* <ParentProfileStats
         className={classes.stats}
         data={data}
-      />
+      /> */}
+      {children}
     </Paper>
   );
 };

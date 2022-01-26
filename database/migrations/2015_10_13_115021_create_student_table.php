@@ -31,10 +31,9 @@ class CreateStudentTable extends Migration {
 			$table->string('religion', 32)->nullable();
 			$table->string('occupation', 200)->nullable();
 			$table->smallInteger('class_id')->nullable();
-			$table->smallInteger('class_type_id')->nullable();
 			$table->unsignedBigInteger('parent_id')->nullable();
 			$table->string('reg_no', 9)->unique();
-			$table->string('profile_pix')->default('default.jpg');
+			$table->string('profile_pic')->default('default.jpg');
 			$table->foreign('parent_id')->references('id')->on('parents');
 			$table->timestamps();
 		});

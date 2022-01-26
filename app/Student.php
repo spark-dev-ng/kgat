@@ -36,7 +36,6 @@ class Student extends Model
     'reg_no',
     'has_extra_class',
     'class_id',
-    'class_type_id',
     'parent_id',
     'session_id',
     'profile_pix',

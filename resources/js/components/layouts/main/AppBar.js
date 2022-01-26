@@ -71,7 +71,7 @@ const styles = theme => ({
 });
 
 
-const AppBar = ({ classes, children }) => {
+const AppBar = ({ classes, children, user }) => {
   const [notificationOpen, setNotificationOpen] = useState(false);
   const notificationButton = useRef();
 
@@ -92,7 +92,7 @@ const AppBar = ({ classes, children }) => {
   const handleToggleRegister = () => {
     setRegisterOpen(!registerOpen);
   };
-
+  console.log({user})
   return (
     <AppBarBase className={classes.appBar} position="static" color="default">
       <Toolbar className={classes.toolbar}>
@@ -130,6 +130,11 @@ const AppBar = ({ classes, children }) => {
           }}
         >
           <List style={{fontSize:'10'}}>
+            <NavListItem> 
+              <Button className={classes.btn}>
+              <Link style={{textDecoration: 'none'}} to="/register/Teacher">Teacher</Link>
+              </Button>
+            </NavListItem>
             <NavListItem> 
               <Button className={classes.btn}>
               <Link style={{textDecoration: 'none'}} to="/register/Guardian">Guardian</Link>

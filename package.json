@@ -30,6 +30,7 @@
         "auto-bind": "^4.0.0",
         "classnames": "^2.3.1",
         "clsx": "^1.1.1",
+        "moment": "^2.29.1",
         "react-calendar": "^3.4.0",
         "react-html-parser": "^2.0.2",
         "react-material-ui-carousel": "^2.3.5",

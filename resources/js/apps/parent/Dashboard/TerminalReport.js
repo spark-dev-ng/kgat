@@ -36,7 +36,7 @@ export default function TerminalReport({child, session, term}) {
   }
   const renderStudent = ()=>{
     if(child){
-      const img = child.profile_pix
+      const img = child.profile_pic
       return(<CardContent>
           <ProfileHeader
             className={classes.header}

@@ -9,7 +9,6 @@ export const getSchools= ()=> {
 }
 
 export const getClasses =()=>{
-
 	return [
 		{id:1,name:'Pre Nursery'},
 		{id:2,name:'Nursery 1'},
@@ -27,7 +26,20 @@ export const getClasses =()=>{
 		{id:14,name:'SS 2'},
 		{id:15,name:'SS 3'}
 	];
-
+}
+export const getSubjects =()=>{
+	return [
+		{id:1,name:'English'},
+		{id:2,name:'Mathematics'},
+		{id:3,name:'Biology'},
+		{id:4,name:'Chemistry'},
+		{id:5,name:'Physics'},
+		{id:6,name:'Agric Science'},
+		{id:7,name:'Basic Science'},
+		{id:8,name:'Basic Technology'},
+		{id:9,name:'Computer Studies'},
+		{id:10,name:'Islamic Studies'}
+	];
 }
 export const getClass =  getClasses
 export const getSchool =  getSchools

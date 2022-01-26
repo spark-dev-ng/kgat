@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
+use App\Teacher;
+use App\Student;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,7 +19,17 @@ use App\Http\Controllers\StudentController;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    $user = $request->user();
+    $user->userable;
+    switch ($user->userable_type) {
+        case 'App\\Teacher':
+            $user->teacher =  Teacher::find($user->userable_id);
+            break;
+        case 'App\\Student':
+            $user->student = Student::find($user->userable_id);
+            break;
+    }
+    return $user;
 });
 
 Route::prefix('v1')->group(function () {
@@ -24,26 +37,28 @@ Route::prefix('v1')->group(function () {
     Route::post('login', [AdminController::class, 'login']);
     Route::post('register', [AdminController::class, 'register']); //->middleware('auth:api']);
     //Dashboard
-    Route::post('user', [AdminController::class, 'user']);
-
+    // Route::post('user', [AdminController::class, 'user'])->middleware('auth:sanctum');
+    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+        return $request->user();
+    });
     Route::group(['prefix' => 'admin'], function () {
         Route::get('news', function () {
             return 'Welcome';
         });
-        // Route::get('login', function()
-        // {
-        //     return response()->json(['error'=>'Unauthorised','message'=>'login first'], 401);
-        // })->name('login']);
         Route::post('users', [AdminController::class, 'users']);
         Route::post('logout', [AdminController::class, 'logout']);
     });
 
-    Route::group(array('prefix' => 'teacher'), function () {
-
+    Route::group(array('prefix' => 'teacher','middleware' => 'auth:sanctum'), function () {
+        Route::post('{teacher}', [TeacherController::class, 'getTeacher']);
+        Route::get('students/{id?}', [TeacherController::class,'students']);
+        Route::post('students/attendence', [TeacherController::class,'getAttendance']);
+        Route::post('students/attendance', [TeacherController::class,'postAttendance']);
         Route::resource("/", TeacherController::class);
         Route::get('login', [TeacherController::class, 'index']);
         Route::post('login', [TeacherController::class, 'postLogin']);
         Route::get('register', [TeacherController::class, 'getRegister']);
+        Route::get('all', [TeacherController::class, 'getTeachers']);
         Route::post('register', [TeacherController::class, 'postRegister']);
         Route::get('logout', [TeacherController::class, 'getLogout']);
         //Student main route

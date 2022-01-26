@@ -29,9 +29,9 @@ class  Terminal extends React.Component {
     const { child  } = this.props
     let { id, term, session } = this.props.match.params
     let parent = child  && child.child  ? child .child   : ''
-    let profile_pix ='default.jpg'
+    let profile_pic ='default.jpg'
     if(child && child.userable)
-        profile_pix = child && child.userable ? child.userable.profile_pix : ''
+        profile_pic = child && child.userable ? child.userable.profile_pic : ''
     return (
       <PrintReportSheet student={child} term={term} session={session} />
     );

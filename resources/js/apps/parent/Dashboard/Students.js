@@ -59,7 +59,7 @@ export default function Students({students}) {
         <TableBody>
           {students && students.map(row => (
             <TableRow key={row.id}>
-              <TableCell>{i+=1} <img src={`/student_photo/${row.profile_pix}`} width='50' height='50' /></TableCell>
+              <TableCell>{i+=1} <img src={`/student_photo/${row.profile_pic}`} width='50' height='50' /></TableCell>
               <TableCell><Route style={{textDecoration: 'none'}} to={`g-child/${row.id}`}>{row.name}</Route></TableCell>
               <TableCell>{row.dob}</TableCell>
               <TableCell>{getSchName(row.school_id)}</TableCell>

@@ -15,14 +15,17 @@ class CreateTeacherTable extends Migration {
 		Schema::create('teachers', function(Blueprint $table)
 		{
 			$table->id();
-            $table->string('name');
-            $table->string('gender', 6);
-            $table->smallInteger('class_id');
-            $table->smallInteger('class_type_id');
-            $table->string('teacher_reg', 9)->unique();
-            $table->string('profile_pix')->default('default.jpg');
-            $table->string('address')->nullable();
-            $table->string("phone", 25);
+			$table->string('name');
+			$table->string('gender', 6);
+			$table->string("dob", 25)->nullable();
+			$table->string('address')->nullable();
+			$table->string('class');
+			$table->string('classes')->nullable();
+			$table->string('reg_no', 9)->unique();
+			$table->string('profile_pic')->default('/images/profiles/default.jpg');
+			$table->string("phone", 25);
+			$table->string("phone2", 25)->nullable();
+			$table->string("subjects", 200)->nullable();
 			$table->timestamps();
 		});
 	}

@@ -40,7 +40,7 @@ export default function SessionReport({child, session}) {
 
 const renderStudent = ()=>{
   if(child){
-    const img = child.profile_pix
+    const img = child.profile_pic
     return(
       <CardContent>
         <ProfileHeader

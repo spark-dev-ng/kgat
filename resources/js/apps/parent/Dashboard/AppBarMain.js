@@ -10,19 +10,14 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import {Link} from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import LockIcon from '@material-ui/icons/LockOpen';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, SecondaryListItems } from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
-import {userActions} from '../../../redux/actions/authUser'
+import { MainListItems, SecondaryListItems,AdminNav, TeacherNav } from './listItems';
+
+import { useSelector } from 'react-redux';
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -104,23 +99,29 @@ const useStyles = makeStyles(theme => ({
     textDecoration:'none'
   }
 }));
-const rendLastList = (student = null)=>{
-  if(student && student.id){
-    return <SecondaryListItems student={student} />
-  }else{
-    return <div> </div>
+const renderLastList = ({user = {}})=>{
+  switch (user.userable_type) {
+    case "App\\Student":
+     return <SecondaryListItems user={user} key='0'/>
+     case 'App\\Admin':
+       return <AdminNav user={user} key='1'/>
+    case 'App\\Teacher':
+      return <TeacherNav user={user} key='2'/>
+      default:
+        return <MainListItems user={user} key='3'/>
   }
 }
-  export default function AppBarMain({student}) {
+  export default function AppBarMain() {
+    const {user} = useSelector(state => state.auth)
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
+
     const handleDrawerOpen = () => {
       setOpen(true);
     };
     const handleDrawerClose = () => {
       setOpen(false);
     };
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
     <>
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
@@ -135,10 +136,12 @@ const rendLastList = (student = null)=>{
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            <Link to='/dashboard' style={{textDecoration:'none'}}>Parent Dashboard</Link>
+            <Link to='/dashboard/index' style={{textDecoration:'none'}}>Dashboard</Link>
           </Typography>
-          <IconButton color="inherit">
-          <Link to='login' onClick={()=>userActions.logout()}> <LockIcon /></Link>
+          <IconButton color="inherit" onClick={()=>{
+            localStorage.removeItem('token');
+            location='/login'}}>
+          <LockIcon />
           </IconButton>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -162,9 +165,9 @@ const rendLastList = (student = null)=>{
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>{MainListItems}</List>
         <Divider />
-        <List>{rendLastList(student)}</List>
+        <List>{renderLastList({user})}</List>
       </Drawer>
       </>)
 }

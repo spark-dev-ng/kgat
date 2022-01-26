@@ -20,9 +20,18 @@ trait AdminAuth {
      * 
      * @return \Illuminate\Http\Response 
      */ 
-    public function login(LoginRequest $req){ 
-        // dd($req);
-        if(Auth::attempt($req->only(['username','password']))){ 
+    public function login(LoginRequest $request){ 
+        $cred = $this->credentials($request);
+        // if(is_numeric($request->get('username'))){
+        //     $cred= ['phone'=>$request->get('username'),'password'=>$request->get('password')];
+        // }
+        // elseif (filter_var($request->get('username'), FILTER_VALIDATE_EMAIL)) {
+        //     $cred = ['email' => $request->get('username'), 'password'=>$request->get('password')];
+        // }
+        // else{
+        //     $cred = ['username' => $request->get('username'), 'password'=>$request->get('password')];
+        // }
+        if(Auth::attempt($cred)){ 
             $user = Auth::user(); 
             $token =  $user->createToken('token')-> plainTextToken; 
             $user->token = $token;
@@ -34,6 +43,22 @@ trait AdminAuth {
             return response()->json(['error'=>'Unauthorised'], 401); 
         } 
     } 
+    /**
+       * Get the needed authorization credentials from the request.
+       *
+       * @param  \Illuminate\Http\Request  $request
+       * @return array
+       */
+      protected function credentials($request)
+      {
+        if(is_numeric($request->get('username'))){
+           return ['phone'=>$request->get('username'),'password'=>$request->get('password')];
+        }
+        elseif (filter_var($request->get('username'), FILTER_VALIDATE_EMAIL)) {
+            return ['email' => $request->get('username'), 'password'=>$request->get('password')];
+        }
+        return ['username' => $request->get('username'), 'password'=>$request->get('password')];
+      }
     /** 
      * Register api 
      * 
@@ -67,6 +92,8 @@ trait AdminAuth {
                 break;
             case 'Teacher':
                 $input['userable_type'] =  'App\Teacher';
+                $input['reg_no'] = 'GMS.'.(Teacher::where('id','>',1)->count()+1);
+                $input['username']  = $input['reg_no'] ;
                 if($profile = Teacher::create($input)){
                     $input['userable_id'] = $profile->id;
                 }
@@ -88,7 +115,6 @@ trait AdminAuth {
                 $input['reg_no']= $code[0]->code.'/'.date("y").'/'.$count;
             }
             $input['username'] = $input['reg_no'];
-            $input['class_type_id'] = $code[0]->group_id;
             $input['class_id'] = $cls[0]->id;
             
                 if($profile = Student::create($input)){
@@ -108,7 +134,7 @@ trait AdminAuth {
     public function user() 
     { 
         $user = Auth::user(); 
-        $user->userable;
+        // $user->userable;
         return response()->json(['user' => $user], $this-> successStatus); 
     } 
 
